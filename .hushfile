@@ -1,0 +1,6 @@
+super_secret_key: abcdefghijklmnopqrstuvwxyz
+secret_app_number: 42
+ secret_float: 60.67
+wrong_float: sddd
+wrong_int: f45s
+numeric_str: 4566

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -13,12 +14,8 @@ type Hush struct {
 }
 
 func Hushfile() Hush {
-	f, err := os.Open(".hushfile")
-	if err != nil {
-		log.Fatal(err)
-		panic(err)
-	}
-
+	// open the hushfile
+	f := openHushfile()
 	var h Hush
 	scanner := bufio.NewScanner(f)
 	h.properties = readHushFile(scanner)
@@ -63,6 +60,33 @@ func (h Hush) GetFloat(key string) (float64, bool) {
 		return ret, false
 	}
 	return ret, true
+}
+
+func openHushfile() *os.File {
+	path, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+		panic(err)
+	}
+
+	// try and open the hushfile if it is in the same
+	// directory
+	f, err := os.Open(filepath.Join(path, ".hushfile"))
+	if err != nil {
+		// try and open the hushfile if it is in /conf/
+		f, err = os.Open(filepath.Join(path, "/conf/.hushfile"))
+		if err != nil {
+			// try and open the hushfile if it is in /app/
+			// this is the case with a Revel application
+			f, err = os.Open(filepath.Join(path, "/app/.hushfile"))
+			if err != nil {
+				log.Fatal(err)
+				panic(err)
+			}
+		}
+	}
+
+	return f
 }
 
 // read the hushfile line by line

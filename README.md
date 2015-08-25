@@ -17,7 +17,7 @@ It's probably a good idea to add the .hushfile to your .gitignore.
 
 * If you are using Hush without Revel, just put the .hushfile in the same directory from where you are running a Go program.
 
-* If you are using Hush with Revel, put your .hushfile in the app/ directory or in the conf/ directory and be sure to call `revel run yourapp` from the app directory.
+* If you are using Hush with Revel, put your .hushfile in the app/ directory or in the conf/ directory and be sure to call `revel run yourapp` from the root directory of yourapp.
 
 <h3>How to Use Hush</h3>
 <h4>Without Revel</h4>
